@@ -1,11 +1,12 @@
 import streamlit as st
 from enter_data import enter_data
 from uploade_best_match import uploade_best_match
+from ai_engine import load_ai_model
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
-st.loader("Loading...")
+
 st.set_page_config(
     page_title="Academic Plan Equivalency Tool",
     page_icon="🎓",
@@ -14,7 +15,7 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# GLOBAL CSS (Theme from EduPredict)
+# GLOBAL CSS (Theme + Loader)
 # ─────────────────────────────────────────────────────────────────────────────
 
 st.markdown("""
@@ -126,7 +127,7 @@ html, body, [class*="css"] {
 /* ── Feature cards ── */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Changed to 2 for this tool */
+    grid-template-columns: repeat(2, 1fr);
     gap: 18px;
     margin-bottom: 32px;
 }
@@ -166,11 +167,74 @@ html, body, [class*="css"] {
 div[data-baseweb="select"] > div {
     background-color: white !important;
 }
+
+/* ── Full Screen Loader ── */
+.loader-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #f8f7f4; /* Same as --cream */
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e2e8f0;
+    border-top: 6px solid #0d9488; /* Teal color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    color: #0f1f3d;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.loader-subtext {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MAIN INTERFACE
+# INITIAL LOADING LOGIC (Show Loader First)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Create a placeholder for the loader
+loader_placeholder = st.empty()
+
+# Display the Loader HTML
+with loader_placeholder.container():
+    st.markdown("""
+    <div class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading AI Engine...</div>
+        <div class="loader-subtext">Please wait, downloading the NLP model (First time only)</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Trigger the actual model loading (This is where the app "pauses")
+load_ai_model()
+
+# Clear the loader once the model is ready
+loader_placeholder.empty()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN INTERFACE LOGIC
 # ─────────────────────────────────────────────────────────────────────────────
 
 # If user selects an option from sidebar or hidden selector, we redirect logic
