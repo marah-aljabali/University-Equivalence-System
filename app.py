@@ -5,7 +5,7 @@ from uploade_best_match import uploade_best_match
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
-
+st.loader("Loading...")
 st.set_page_config(
     page_title="Academic Plan Equivalency Tool",
     page_icon="🎓",
