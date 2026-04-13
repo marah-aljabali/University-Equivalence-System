@@ -1,4 +1,0 @@
-streamlit
-pandas
-sentence-transformers
-PyMuPDF
