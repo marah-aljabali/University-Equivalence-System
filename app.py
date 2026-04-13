@@ -207,6 +207,38 @@ div[data-baseweb="select"] > div {
     font-size: 0.9rem;
     margin-top: 5px;
 }
+/* ── Custom Footer ── */
+.main-footer {
+    margin-top: 60px;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    background-color: #ffffff; /* خلفية بيضاء نظيفة */
+    border-radius: 16px; /* تدوير الزوايا لتناسب الكرو */
+    box-shadow: 0 -4px 20px rgba(15,31,61,.05); /* ظل خفيف للأعلى */
+}
+.footer-icon { 
+    font-size: 2rem; 
+    margin-bottom: 12px; 
+    display: block; 
+}
+.footer-copyright { 
+    font-size: 0.95rem; 
+    color: var(--navy); 
+    font-weight: 600; 
+    font-family: 'DM Sans', sans-serif;
+}
+.footer-dev {
+    font-size: 0.85rem;
+    color: var(--slate);
+    margin-top: 6px;
+    font-family: 'DM Sans', sans-serif;
+}
+.author-highlight {
+    color: var(--teal); /* اسمك سيكون باللون التركوازي */
+    font-weight: 700;
+    text-decoration: none;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -380,3 +412,14 @@ elif st.session_state.page == 'enter':
     </div>
     """, unsafe_allow_html=True)
     enter_data()
+    
+# ─────────────────────────────────────────────────────────────────────────────
+# FOOTER
+# ─────────────────────────────────────────────────────────────────────────────
+st.markdown("""
+<div class="main-footer">
+  <span class="footer-icon">🎓</span>
+  <div class="footer-copyright">© 2026 Academic Plan Equivalency Tool. All Rights Reserved.</div>
+  <div class="footer-dev">Designed & Developed by <span class="author-highlight">Eng. Marah Ahmed Aljabali</span></div>
+</div>
+""", unsafe_allow_html=True)
